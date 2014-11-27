@@ -1,0 +1,71 @@
+<TMPL_INCLUDE NAME="header.tmpl">
+<body>
+<TMPL_IF NAME=CONFIRM>
+<script language="javascript">window.opener.location.reload();</script>
+</TMPL_IF>
+<div align="center">
+<h2>設定屬性</h2>
+<form method="get" action="set_attributes.pl">
+<input type="hidden" name="profile" value="<TMPL_VAR NAME=PROFILE>" />
+<input type="hidden" name="uid" value="<TMPL_VAR NAME=UID>" />
+<table border="1">
+<tbody>
+<TMPL_LOOP NAME=LOOP_ATTRIBUTES>
+<tr>
+    <th><TMPL_VAR NAME=key></th>
+    <td><input type="text" id="id_<TMPL_VAR NAME=key>" name="<TMPL_VAR NAME=key>" value="<TMPL_VAR NAME=value>" /></td>
+</tr>
+</TMPL_LOOP>
+<tr class="odd">
+    <th>CONFIRM</th><td><input type="checkbox" name="confirm" value="1"<TMPL_IF NAME=CONFIRM> checked="checked"</TMPL_IF> /></td>
+</tr>
+<tr>
+    <td colspan="2" style="text-align: center;">
+        <input type="button" id="update" value="取得資料" />
+        <input type="submit" />
+        <input type="button" value="取消" onclick="javascript:window.close()" />
+    </td>
+</tr>
+</tbody>
+</table>
+</form>
+<pre>
+<TMPL_VAR NAME=RESULT>
+</pre>
+</div>
+<script type="text/javascript">
+/* <![CDATA[ */
+jQuery.noConflict();
+(function($) { 
+    $(function() {
+        $('#update').click(function() {
+            var name = $('#id_cn').val();
+            $.get('./utils/xldap_get_info.pl', { 'type': 1, 'q': name },
+                function(data) {
+                    alert(data);
+                    var ds = data.split(/\t+/);
+                    var o = $('#id_o').val();
+                    var title = $('#id_title').val();
+                    var telephonenumber = $('#id_telephonenumber').val();
+                    if (o != ds[1]) {
+                        $('#id_o').css('background-color', 'pink');
+                        $('#id_o').val(o + '(' + ds[1] + ')');
+                    }
+                    if (title != ds[2]) {
+                        $('#id_title').css('background-color', 'pink');
+                        $('#id_title').val(title + '(' + ds[2] + ')');
+                    }
+                    if (telephonenumber != ds[3]) {
+                        $('#id_telephonenumber').css('background-color', 'pink');
+                        $('#id_telephonenumber').val(telephonenumber + '(' + ds[3] + ')');
+                    }
+                }
+            );
+        });
+    });
+})
+(jQuery);
+/* ]]> */
+</script>
+</body>
+<TMPL_INCLUDE NAME="footer.tmpl">

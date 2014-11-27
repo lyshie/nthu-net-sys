@@ -1,0 +1,85 @@
+<script type="text/javascript">
+/* <![CDATA[ */
+jQuery.noConflict();
+(function($) {
+
+    $(function() { 
+        $("#select_form").hide();
+        $("#toggle_button").show();
+
+        $("#select_profile").click(function(e) {
+            $("#select_form").toggle();
+        });
+
+        var $opt = $('#profile');
+        if ($opt.length > 0) {
+            var selectedVal = $opt.val();
+            var $options = $('option', $opt);
+            var arrVals = [];
+
+            $options.each(function() {
+                arrVals.push({
+                    val: $(this).val(),
+                    text: $(this).text()
+                });
+            });
+
+            arrVals.sort(function(a, b) {
+                return a.val.replace(/[^.0-9]/g, "") - b.val.replace(/[^.0-9]/g, "");
+            });
+
+            for (var i = 0, j = arrVals.length; i < j; i++) {
+                $($options[i]).val(arrVals[i].val).text(arrVals[i].text);
+            }
+
+            $opt.val(selectedVal);
+        }
+
+    });
+
+})
+(jQuery);
+/* ]]> */
+</script>
+
+<br />
+<div align="right" id="toggle_button">
+<input type="button" id="select_profile" value="選擇系統名稱" />
+</div>
+<div id="select_form">
+<form action="list_user.pl" method="get">
+<input type="hidden" name="degree" value="0" />
+<table border="1">
+<thead>
+<tr>
+    <th>系統名稱</th><td><select name="profile" id="profile">
+<TMPL_LOOP NAME=LOOP_PROFILE>
+<option value="<TMPL_VAR NAME=PROFILE>"><TMPL_VAR NAME=PROFILE> (<TMPL_VAR NAME=PROFILE_LONG>)</option>
+</TMPL_LOOP>
+</select></td>
+</tr>
+<tr>
+    <th>異動時間</th>
+    <td>
+    <select name="modify_time">
+        <option value="0">-- 全部 --</option>
+        <option value="1">最近一小時內</option>
+        <option value="12">最近半天內</option>
+        <option value="24">最近一天內</option>
+        <option value="168" selected="selected">最近一週內</option>
+        <option value="720">最近 30 天內</option>
+        <option value="1440">最近 60 天內</option>
+        <option value="5760">最近 240 天內</option>
+        <option value="11520">最近 480 天內</option>
+    </select>
+    </td>
+</tr>
+</thead>
+<tbody>
+<tr>
+    <td colspan="2" style="text-align: center;"><input type="submit" /></td>
+</tr>
+</tbody>
+</table>
+</form>
+</div>

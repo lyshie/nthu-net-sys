@@ -1,0 +1,140 @@
+<TMPL_INCLUDE NAME="header.tmpl">
+<body>
+<TMPL_IF NAME=CONFIRM>
+<script language="javascript">window.opener.location.reload();</script>
+</TMPL_IF>
+<div align="center">
+<h2>新增帳號</h2>
+<form id="add_user" method="get" action="add_user.pl">
+<input type="hidden" name="profile" value="<TMPL_VAR NAME=PROFILE>" />
+<table border="1">
+<tbody>
+<tr class="odd">
+    <th>UID</th><td><input type="text" name="uid" value="<TMPL_VAR NAME=UID>" id="uid" /></td>
+</tr>
+<tr>
+    <th>ID</th><td><input type="text" name="id" value="<TMPL_VAR NAME=ID>" id="id" /></td>
+</tr>
+<tr class="odd">
+    <th>NAME</th><td><input type="text" name="name" value="<TMPL_VAR NAME=NAME>" id="name" /></td>
+</tr>
+<tr>
+    <th>HOME DIRCTORY</th><td><input type="text" name="homedirectory" value="<TMPL_VAR NAME=HOMEDIRECTORY>" id="homedirectory" /></td>
+</tr>
+<tr class="odd">
+    <th>CONFIRM</th><td><input type="checkbox" name="confirm" value="1" /></td>
+</tr>
+<tr>
+    <td colspan="2" style="text-align: center;">
+        <input type="submit" />
+        <input type="button" value="取消" onclick="javascript:window.close()" />
+    </td>
+</tr>
+</tbody>
+</table>
+</form>
+<pre id="result">
+<TMPL_VAR NAME=RESULT>
+</pre>
+</div>
+<script type="text/javascript">
+/* <![CDATA[ */
+jQuery.noConflict();
+(function($) { 
+    $(function() {
+        var uids = '';
+        var profile = "<TMPL_VAR NAME=PROFILE>";
+
+        $.get('./utils/get_all_users.cgi', { 'profile': profile },
+                function(data) {
+                    uids = data;
+                }
+        );
+
+        // lyshie_20120319: only accept [0-9a-z] characters
+        $('#uid').keypress(function(e) {
+            if (e.which < 32) {
+                // control characters
+            }
+            else if ((e.which == 45) || (e.which == 46) || (e.which == 95)) {
+                // lyshie_20130418: add following symbols
+                // 45 => hyphen (-)
+                // 46 => dot (.)
+                // 95 => underscore (_)
+            }
+            else if ((e.which >= 48) && (e.which <= 57)) {
+                // 0-9
+            }
+            else if ((e.which >= 97) && (e.which <= 122)) {
+                // a-z
+            }
+            else {
+                e.preventDefault();
+                alert('只允許輸入dot(.)、hyphen(-)、underscore(_)、數字及小寫英文字母！');
+            }
+        });
+
+        $('#uid').focusout(function() {
+            var uid = $(this).val();
+
+            if (uids.indexOf("\t" + uid + "\t") < 0) {
+                $.get('./utils/get_mkhomedir_style.cgi', { 'profile': profile, 'uid': uid },
+                    function(data) {
+                        $('#homedirectory').val(data);
+                    }
+                );
+            }
+            else {
+                alert('該帳號已存在，無法使用！');
+                $('#homedirectory').val('');
+                $('#uid').focus();
+            }
+        });
+
+        $('#add_user').submit(function() {
+            var uid = $('#uid').val();
+            var homedirectory = $('#homedirectory').val();
+            var pattern = new RegExp('/' + uid + '$');
+            if (pattern.test(homedirectory)) {
+                return true;
+            }
+            else {
+                alert('目錄名稱未包含正確 uid，無法送出！');
+                return false;
+            }
+        });
+
+        // lyshie_20141105: add hints for administrator
+        var result = $("pre#result").text();
+
+        if (result) {
+            var uid;
+            var uidnumber;
+
+            var m;
+            m = result.match(/uidNumber = (\d+)/);
+            if (m) {
+                uidnumber = m[1];
+            }
+            m = result.match(/uid = ([^\[\]]+)/);
+            if (m) {
+                uid = m[1];
+            }
+
+            if (profile && uid && uidnumber) {
+                if (confirm("繼續為使用者 (" + uid + ") 設定 quota？")) {
+                    alert("您可別忘記要幫使用者設定密碼！");
+                    window.location = "./set_quota.pl?" + "profile=" + profile + "&" + "uid=" + uid + "&" + "uidnumber=" + uidnumber;
+                }
+                else {
+                    alert("您可別忘記要幫使用者設定密碼！");
+                }
+            }
+        }
+    });
+})
+(jQuery);
+/* ]]> */
+</script>
+</body>
+<TMPL_INCLUDE NAME="footer.tmpl">

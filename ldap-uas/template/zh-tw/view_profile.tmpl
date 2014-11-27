@@ -1,0 +1,30 @@
+<TMPL_INCLUDE NAME="header.tmpl">
+<body>
+<TMPL_IF NAME=CONFIRM>
+<script language="javascript">window.opener.location.reload();</script>
+</TMPL_IF>
+<div align="center" style="width: 380px; height: 460px; overflow: auto;">
+<h2>設定檔資訊</h2>
+PROFILE: <TMPL_VAR NAME=PROFILE>
+<table border="1">
+<tbody>
+<tr>
+    <th>Key</th>
+    <th>Value</th>
+</tr>
+<TMPL_LOOP NAME="LOOP_CONFIGS">
+<tr>
+    <td><TMPL_VAR NAME=KEY></td>
+    <td><TMPL_VAR NAME=VALUE ESCAPE=HTML></td>
+</tr>
+</TMPL_LOOP>
+<tr class="odd">
+    <td colspan="4" style="text-align: center;">
+        <input type="button" value="關閉" onclick="javascript:window.close()" />
+    </td>
+</tr>
+</tbody>
+</table>
+</div>
+</body>
+<TMPL_INCLUDE NAME="footer.tmpl">

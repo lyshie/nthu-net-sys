@@ -1,0 +1,66 @@
+<TMPL_INCLUDE NAME="header.tmpl">
+<body>
+<TMPL_IF NAME=CONFIRM>
+<script language="javascript">window.opener.location.reload();</script>
+</TMPL_IF>
+<div align="center" id="container">
+<h2>執行指令</h2>
+<form method="get" action="run_utils.pl">
+<table border="1">
+<tbody>
+<tr class="odd">
+    <th>COMMAND</th><td><select name="command">
+<TMPL_LOOP NAME=LOOP_COMMAND>
+<option value="<TMPL_VAR NAME=command>"><TMPL_VAR NAME=command></option>
+</TMPL_LOOP>
+</select></td>
+</tr>
+<tr class="odd">
+    <th>CONFIRM</th><td><input type="checkbox" name="confirm" value="1" /></td>
+</tr>
+<tr>
+    <th>ARGV</th><td><input type="text" id="argv" name="argv" value="<TMPL_VAR NAME=argv>" maxlength="64" /></td>
+</tr>
+<tr class="odd">
+    <td colspan="2" style="text-align: center;">
+        <input type="submit" />
+        <input type="button" value="取消" onclick="javascript:window.close()" />
+    </td>
+</tr>
+</tbody>
+</table>
+</form>
+<textarea style="width: 100%;" cols="40" rows="20" readonly="readonly"><TMPL_VAR NAME=RESULT></textarea>
+</div>
+<script type="text/javascript">
+    /* <![CDATA[ */
+    jQuery.noConflict();
+    (function($) {
+        $(function() {
+            $("#argv").keyup(function() {
+                // lyshie_20140310: auto adjust text box width
+                var length    = $(this).val().length;
+                var maxlength = $(this).attr("maxlength");
+
+                if (length > maxlength) {
+                    length = maxlength;
+                }
+
+                $(this).attr("size",  length);
+
+                // lyshie_20140310: audo adjust window width
+                var c_width = $("#container").attr("scrollWidth");
+                var w_width = $(window).width();
+
+                if (c_width > w_width) {
+                    var height = $(window).attr("outerHeight");
+                    window.resizeTo(c_width, height);
+                }
+            });
+        });
+    })
+    (jQuery);
+    /* ]]> */
+</script>
+</body>
+<TMPL_INCLUDE NAME="footer.tmpl">

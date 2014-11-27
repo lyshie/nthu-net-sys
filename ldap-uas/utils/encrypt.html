@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-tw"
+ lang="zh-tw" dir="ltr">
+<head>
+	<title></title>
+	<meta http-equiv="content-type" content="text/html; charset=big5" />
+</head>
+
+<body>
+
+<div align="center">
+<h2>This is a BIG-5 encoded page!</h2>
+
+<form action="encrypt.cgi" method="get">
+<input type="hidden" name="charset" value="big5" />
+<table border="1">
+<tr>
+	<td><label for="name">Name:</label></td>
+	<td><input type="text" name="name" id="name" value="測試者" /></td>
+</tr>
+<tr>
+	<td><label for="name_en">English Name:</label></td>
+	<td><input type="text" name="name_en" id="name_en" value="Testing User" /></td>
+</tr>
+<tr>
+	<td><label for="id">ID:</label></td>
+	<td><input type="text" name="id" id="id" value="A54321" /></td>
+</tr>
+<tr>
+	<td><label for="lang_c">Language:</label></td>
+	<td>
+	<input type="radio" name="language" id="lang_c" value="C" checked="checked" />Chinese
+	<input type="radio" name="language" id="lang_e" value="E" />English
+	</td>
+</tr>
+<tr>
+	<td><label for="target">Target:</label></td>
+	<td>
+	<select name="target" id="target">
+	<option value="ua.net.nthu.edu.tw" selected="selected">ua.net</option>
+	<option value="ua2.net.nthu.edu.tw">ua2.net</option>
+	<option value="r309-1.cc.nthu.edu.tw">r309-1.cc</option>
+	<option value="r309-2.cc.nthu.edu.tw">r309-2.cc</option>
+	</select>
+	</td>
+</tr>
+<tr>
+	<td><label for="condition">Condition:</label></td>
+	<td>
+	<select name="condition" id="condition">
+	<optgroup label="學生狀態">
+		<option value="校" selected="selected">校</option>
+		<option value="休">休</option>
+		<option value="保">保</option>
+		<option value="退">退</option>
+		<option value="畢">畢</option>
+		<option value="復">復</option>
+	</optgroup>
+	<optgroup label="教職員工狀態">
+		<option value="一般">一般</option>
+		<option value="出國">出國</option>
+		<option value="其他">其他</option>
+		<option value="待聘">待聘</option>
+		<option value="借調">借調</option>
+		<option value="退休">退休</option>
+		<option value="離職">離職</option>
+	</optgroup>
+	</select>
+	</td>
+</tr>
+<tr>
+	<td colspan="2" style="text-align: center;"><input type="submit" /><input type="reset" /></td>
+</tr>
+</table>
+</form>
+</div>
+
+</body>
+</html>

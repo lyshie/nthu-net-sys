@@ -1,0 +1,150 @@
+#!/usr/bin/perl -w
+
+#
+#    Copyright (C) 2011~2014 SHIE, Li-Yi (lyshie) <lyshie@mx.nthu.edu.tw>
+#
+#    https://github.com/lyshie
+#	
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation,  either version 3 of the License,  or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful, 
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not,  see <http://www.gnu.org/licenses/>.
+#
+use strict;
+use warnings;
+
+use CGI qw(:standard);
+use FindBin qw($Bin);
+use HTML::Template;
+
+use lib "$Bin";
+use ourTemplate;
+use ourLDAP;
+use ourUtils;
+
+my %_GET       = ();
+my @KEYS       = qw(sn cn o title telephonenumber businesscategory);
+my @ATTRIBUTES = ();
+
+sub read_param {
+    $_GET{'profile'} = defined( param('profile') ) ? param('profile') : 'm99';
+    $_GET{'profile'} =~ s/[^0-9a-zA-Z\-_]//g;
+
+    $_GET{'uid'} = defined( param('uid') ) ? param('uid') : '';
+
+    $_GET{'confirm'} = defined( param('confirm') ) ? param('confirm') : '';
+
+    foreach my $k (@KEYS) {
+        $_GET{$k} = param($k) if ( defined( param($k) ) );
+    }
+}
+
+sub change_field {
+    my ( $ldap, $config, $uid, $user, $key, $value ) = @_;
+
+    my $result = '';
+
+    my $description
+        = defined( $user->{'description'} ) ? $user->{'description'} : '';
+
+    my $old_value = defined( $user->{$key} ) ? $user->{$key} : '';
+
+    my $dn = 'uid=' . $uid . ',' . $config->{'user_dn'};
+    my $mesg;
+    $mesg
+        = ( $value ne '' )
+        ? $ldap->modify( $dn, replace => { "$key" => $value, } )
+        : $ldap->modify( $dn, 'delete' => [$key] );
+
+    if ( !$mesg->code() ) {
+        $description
+            .= "adm-ch$key("
+            . time() . ','
+            . getRemoteAddr() . ','
+            . $old_value . ');';
+        $ldap->modify( $dn, replace => { description => $description, } );
+
+        $result
+            .= sprintf(
+            "OK: Change attribute [uid = %s], [key = %s], [value = %s], [old_value = %s]",
+            $uid, $key, $value, $old_value );
+    }
+    else {
+        $result
+            .= sprintf(
+            "FAIL: Change attribute [uid = %s], [key = %s], [value = %s], [old_value = %s], [error = %s]",
+            $uid, $key, $value, $old_value, $mesg->error() );
+    }
+
+    return $result;
+}
+
+# lyshie: the following codes should be moved to new function
+sub do_action {
+    my $result  = '';
+    my $log_msg = '';
+
+    my ( $ldap, $config, $users );
+
+    $config = ldap_init_config( $_GET{'profile'} );
+    $ldap   = ldap_connect($config);
+
+    if ( $_GET{'confirm'} eq '1' ) {
+        foreach my $k (@KEYS) {
+            if ( defined( $_GET{$k} ) ) {
+                $users
+                    = ldap_get_user( $ldap, $config, $_GET{'uid'}, undef, 1 );
+                if ( $_GET{$k} ne $users->[0]->{$k} ) {
+                    $log_msg .= change_field( $ldap, $config, $_GET{'uid'},
+                        $users->[0], $k, $_GET{$k} );
+                    $result .= "$log_msg\n";
+                }
+            }
+        }
+
+        _L( $0, $log_msg ) if ( $log_msg ne '' );    # syslog
+    }
+
+    $users = ldap_get_user( $ldap, $config, $_GET{'uid'}, undef, 1 );
+    if ($users) {
+        foreach my $k (@KEYS) {
+            my %hash = ();
+            $hash{'key'} = $k;
+            $hash{'value'}
+                = defined( $users->[0]->{$k} ) ? $users->[0]->{$k} : '';
+            $hash{'value'} = _H( $hash{'value'} );
+            push( @ATTRIBUTES, \%hash );
+        }
+    }
+
+    ldap_disconnect($ldap);
+
+    return $result;
+}
+
+sub main {
+    read_param();
+
+    my $result = do_action();
+
+    my $template = HTML::Template->new(
+        filename => getTemplate("set_attributes.tmpl") );
+    $template->param( PROFILE         => $_GET{'profile'} );
+    $template->param( UID             => _H( $_GET{'uid'} ) );
+    $template->param( CONFIRM         => $_GET{'confirm'} );
+    $template->param( LOOP_ATTRIBUTES => \@ATTRIBUTES );
+    $template->param( RESULT          => _H($result) );
+
+    print header( -charset => 'utf-8' );    # later output
+    print $template->output();
+}
+
+main();

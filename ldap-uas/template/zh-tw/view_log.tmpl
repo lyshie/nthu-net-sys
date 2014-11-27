@@ -1,0 +1,37 @@
+<TMPL_INCLUDE NAME="header.tmpl">
+<body>
+<TMPL_IF NAME=CONFIRM>
+<script language="javascript">window.opener.location.reload();</script>
+</TMPL_IF>
+<div align="center" style="width: 380px; height: 460px; overflow: auto;">
+<h2>查看紀錄</h2>
+UID: <TMPL_VAR NAME=UID>
+<table border="1">
+<tbody>
+<tr>
+    <th>Time</th>
+    <th>Event</th>
+    <th>IP</th>
+    <th>Tag</th>
+</tr>
+<TMPL_LOOP NAME="LOOP_EVENTS">
+<tr>
+    <td><TMPL_VAR NAME=TIME></td>
+    <td><TMPL_VAR NAME=EVENT></td>
+    <td nowrap="nowrap"><img src="images/zh-tw/flags/png/<TMPL_VAR NAME=FLAG>.png" alt="<TMPL_VAR NAME=FLAG>" /> <TMPL_VAR NAME=IP></td>
+    <td><TMPL_VAR NAME=TAG></td>
+</tr>
+</TMPL_LOOP>
+<tr class="odd">
+    <td colspan="4" style="text-align: center;">
+        <input type="button" value="關閉" onclick="javascript:window.close()" />
+    </td>
+</tr>
+</tbody>
+</table>
+<pre style="text-align: left;">
+<TMPL_VAR NAME=RESULT>
+</pre>
+</div>
+</body>
+<TMPL_INCLUDE NAME="footer.tmpl">

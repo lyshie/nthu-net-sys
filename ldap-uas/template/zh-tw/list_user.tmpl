@@ -1,0 +1,227 @@
+<TMPL_INCLUDE NAME="header.tmpl">
+<body>
+<script type="text/javascript">
+/* <![CDATA[ */
+function popitup(url) {
+    var newwindow = window.open(url, 'name', 'height=480,width=400');
+    if (window.focus) { newwindow.focus(); }
+    return false;
+}
+
+jQuery.noConflict();
+(function($) {
+
+$(function() {
+        $('select[name="profile"] option[value="<TMPL_VAR NAME=PROFILE>"]').attr('selected', 'selected');
+        $('select[name="modify_time"] option[value="<TMPL_VAR NAME=MODIFY_TIME>"]').attr('selected', 'selected');
+
+        if (<TMPL_VAR NAME=GROUP_SIZE> > 0) {
+            for (var i = 0; i <= <TMPL_VAR NAME=GROUP_SIZE>; i++) {
+                $('.g_' + i).hide().first().show().toggleClass('more');
+                $('.g_' + i).toggle(function() {
+                    var token = $(this).attr('class').split(' ');
+                    $('.' + token[0]).show();
+                    $(this).toggleClass('more');
+                }, function() {
+                    var token = $(this).attr('class').split(' ');
+                    $('.' + token[0]).hide().first().show();
+                    $(this).toggleClass('more');
+                });
+            }
+        }
+        else {
+            $('.g_0').show();
+        }
+
+        $('a').click(function() {
+            popitup($(this).attr('href'));
+            return false;
+        });
+
+        $('#basic_bar').delegate('a', 'click', function() {
+            popitup($(this).attr('href'));
+            return false;
+        });
+
+        $('#expert_bar').delegate('a', 'click', function() {
+            popitup($(this).attr('href'));
+            return false;
+        });
+
+        $('#list_user > tbody > tr').mouseenter(function(event) {
+                var basic = $(this).children('.basic').children().clone();
+                var expert = $(this).children('.expert').children().clone();
+                $('#popupmenu').css('left', event.pageX);
+                $('#popupmenu').css('top', event.pageY);
+                $('#popupmenu').css('display', '');
+                $('#popupmenu').css('background', '#ccc');
+                $('#popupmenu').css('position', 'absolute');
+                $('#popupmenu').css('z-index', '2');
+
+                $('#basic_bar').empty().append('<ul class="basic"></ul>');
+                jQuery.each(basic, function() {
+                    $('#basic_bar > ul').append("<li></li>").append(this);
+                });
+
+                $('#expert_bar').empty().append('<ul class="expert"></ul>');
+                jQuery.each(expert, function() {
+                    $('#expert_bar > ul').append("<li></li>").append(this);
+                });
+        });
+
+        $('td.cn').mouseover(function() {
+            var cn = $(this).attr('title');
+            if (cn) {
+                cn = decodeURI(cn);
+                $(this).text(cn);
+            }
+        }).mouseout(function() {
+            $(this).text('');
+        });
+});
+
+})(jQuery);
+/* ]]> */
+</script>
+<noscript>
+<h3><span class="alert">本系統部份功能需要 Javascript 支援，建議您啟用 Javascript 支援！</span></h3>
+<h3><span class="alert">Some features of this site require JavaScript, please enable it!</span></h3>
+</noscript>
+<div style="position: absolute; top: 0px; right: 0px; z-index: 1;">
+    <div align="right"><a href="logout.pl?timestamp=<TMPL_VAR NAME=TIMESTAMP>">登出系統</a></div>
+    <TMPL_INCLUDE NAME="select_profile.tmpl">
+</div>
+<form method="get" action="list_user.pl">
+<input type="hidden" name="profile" value="<TMPL_VAR NAME=PROFILE>" />
+<table border="1">
+<thead>
+<tr>
+    <th>PREFIX</th><td><select name="prefix">
+<option value="">不指定</option>
+<option value="<TMPL_VAR NAME=PREFIX>" selected="selected">(<TMPL_VAR NAME=PREFIX>)</option>
+<TMPL_LOOP NAME=LOOP_PREFIX>
+<option value="<TMPL_VAR NAME=prefix>"><TMPL_VAR NAME=description></option>
+</TMPL_LOOP>
+</select></td>
+    <th>DEGREE</th><td><select name="degree">
+<option value="">不指定</option>
+<option value="0">非學生</option>
+<option value="<TMPL_VAR NAME=DEGREE>" selected="selected">(<TMPL_VAR NAME=DEGREE>)</option>
+<TMPL_LOOP NAME=LOOP_DEGREE>
+<option value="<TMPL_VAR NAME=degree>"><TMPL_VAR NAME=degree></option>
+</TMPL_LOOP>
+</select></td>
+    <th>PAGE</th><td><select name="page">
+<option value="">不指定</option>
+<option value="<TMPL_VAR NAME=PAGE>" selected="selected">(<TMPL_VAR NAME=PAGE>)</option>
+<TMPL_LOOP NAME=LOOP_PAGE>
+<option value="<TMPL_VAR NAME=page>"><TMPL_VAR NAME=page></option>
+</TMPL_LOOP>
+</select></td>
+    <th>SUBSTRING</th>
+    <td><input type="text" name="substring" value="" /></td>
+    <th><input type="submit" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+    <td colspan="9"><textarea name="filter" style="height: 80px; width: 100%;" rows="5" cols="80"><TMPL_VAR NAME=FILTER></textarea></td>
+</tr>
+</tbody>
+</table>
+</form>
+<br />
+<table border="1">
+<tbody>
+<tr class="odd">
+    <th>連線資訊</th>
+    <td>
+        <TMPL_VAR NAME=INFO>
+    </td>
+</tr>
+<tr>
+    <th>工具箱</th>
+    <td>
+        <a href="add_user.pl?profile=<TMPL_VAR NAME=profile>">新增帳號</a>
+        <a href="add_group.pl?profile=<TMPL_VAR NAME=profile>">新增群組</a>
+        <a href="duplicate_uidnumber.pl?profile=<TMPL_VAR NAME=profile>">重複 uidNumber 檢查</a>
+        <a href="password_check.pl?profile=<TMPL_VAR NAME=profile>">密碼檢查</a>
+        <a href="user_check.pl?profile=<TMPL_VAR NAME=profile>">帳號檢查</a>
+        <a href="view_profile.pl?profile=<TMPL_VAR NAME=profile>">設定檔資訊</a>
+        <a href="run_utils.pl">執行指令</a>
+        <a href="utils/lbe/Gawor_ldapbrowser_282.zip" target="_blank">LDAP Browser/Editor</a>
+        <a href="utils/encrypt.html" target="_blank">模擬登入</a>
+    </td>
+</tr>
+</tbody>
+</table>
+<h3>回傳資料 <TMPL_VAR NAME=COUNT> 筆</h3>
+<table id="list_user" border="1">
+<thead>
+<tr>
+    <th>編號<br />(NO.)</th>
+    <th>使用者名稱<br />(uid)</th>
+    <th>姓名<br />(cn)</th>
+    <th>使用者編號 / 群組編號<br />(uidNumber) / (gidNumber)
+    </th>
+    <th>密碼<br />(userPassword)</th>
+    <th style="display: none;">一般動作</th>
+    <th style="display: none;">特殊動作</th>
+</tr>
+</thead>
+<tbody>
+<TMPL_LOOP NAME=LOOP_LIST_USER>
+<tr class="g_<TMPL_VAR NAME=group><TMPL_IF NAME=odd> odd</TMPL_IF><TMPL_IF NAME=suspended> suspended</TMPL_IF>">
+    <th><TMPL_VAR NAME=id></th>
+    <td class="normal"><TMPL_VAR NAME=uid></td>
+    <td class="normal cn" title="<TMPL_VAR NAME=cn>"></td>
+    <td class="normal"><TMPL_VAR NAME=uidnumber> / <TMPL_VAR NAME=gidnumber> (<TMPL_VAR NAME=gid>)</td>
+    <td class="normal pw"><TMPL_VAR NAME=userpassword></td>
+    <td class="basic" style="display: none;">
+        <TMPL_IF NAME=suspended>
+        <TMPL_ELSE>
+        <a href="set_userpassword.pl?profile=<TMPL_VAR NAME=profile>&amp;uid=<TMPL_VAR NAME=escape_uid>">Password</a>
+        <a href="set_quota.pl?profile=<TMPL_VAR NAME=profile>&amp;uid=<TMPL_VAR NAME=escape_uid>&amp;uidnumber=<TMPL_VAR NAME=escape_uidnumber>&amp;quota=<TMPL_VAR NAME=quota>">Quota</a>
+        <a href="set_loginshell.pl?profile=<TMPL_VAR NAME=profile>&amp;uid=<TMPL_VAR NAME=escape_uid>&amp;loginshell=<TMPL_VAR NAME=escape_loginshell>">Shell</a>
+        <a href="set_homedirectory.pl?profile=<TMPL_VAR NAME=profile>&amp;uid=<TMPL_VAR NAME=escape_uid>&amp;homedirectory=<TMPL_VAR NAME=escape_homedirectory>">Home</a>
+        <a href="set_gidnumber.pl?profile=<TMPL_VAR NAME=profile>&amp;uid=<TMPL_VAR NAME=escape_uid>&amp;gidnumber=<TMPL_VAR NAME=escape_gidnumber>">GID</a>
+        <a href="set_uidnumber.pl?profile=<TMPL_VAR NAME=profile>&amp;uid=<TMPL_VAR NAME=escape_uid>&amp;uidnumber=<TMPL_VAR NAME=escape_uidnumber>">UID</a>
+        <a href="set_attributes.pl?profile=<TMPL_VAR NAME=profile>&amp;uid=<TMPL_VAR NAME=escape_uid>">ATTRS</a>
+        </TMPL_IF>
+    </td>
+    <td class="expert" style="display: none;">
+        <TMPL_IF NAME=suspended>
+        <a href="restore_user.pl?profile=<TMPL_VAR NAME=profile>&amp;uid=<TMPL_VAR NAME=escape_uid>">復用</a>
+        <a href="delete_user.pl?profile=<TMPL_VAR NAME=profile>&amp;uid=<TMPL_VAR NAME=escape_uid>">刪除</a>
+        <TMPL_ELSE>
+        <a href="verify_user.pl?profile=<TMPL_VAR NAME=profile>&amp;uid=<TMPL_VAR NAME=escape_uid>&amp;uidnumber=<TMPL_VAR NAME=escape_uidnumber>&amp;gidnumber=<TMPL_VAR NAME=escape_gidnumber>">檢查</a>
+        <a href="view_log.pl?profile=<TMPL_VAR NAME=profile>&amp;uid=<TMPL_VAR NAME=escape_uid>">紀錄</a>
+        <a href="run_utils.pl?command=xldap_stop_password&amp;confirm=0&amp;argv=<TMPL_VAR NAME=profile>%201%20&quot;(uid=<TMPL_VAR NAME=escape_uid>)&quot;">警示暫停密碼</a>
+        <a href="run_utils.pl?command=xldap_suspend_password&amp;confirm=0&amp;argv=<TMPL_VAR NAME=profile>%201%20&quot;(uid=<TMPL_VAR NAME=escape_uid>)&quot;">緊急停用密碼</a>
+        <a href="suspend_user.pl?profile=<TMPL_VAR NAME=profile>&amp;uid=<TMPL_VAR NAME=escape_uid>">註銷</a>
+        </TMPL_IF>
+    </td>
+</tr>
+</TMPL_LOOP>
+</tbody>
+</table>
+<h3>花費 <TMPL_VAR NAME=TIME> 秒</h3>
+<div id="popupmenu" style="position: absolute; display: none;">
+<table border="1">
+<thead>
+<tr>
+	<th>基本操作</th>
+	<th>進階操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td><span id="basic_bar"></span></td>
+	<td><span id="expert_bar"></span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="watermark"><TMPL_VAR NAME=PROFILE></div>
+</body>
+<TMPL_INCLUDE NAME="footer.tmpl">

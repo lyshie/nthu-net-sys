@@ -1,0 +1,35 @@
+<TMPL_INCLUDE NAME="header.tmpl">
+<body>
+<TMPL_IF NAME=CONFIRM>
+<script language="javascript">window.opener.location.reload();</script>
+</TMPL_IF>
+<div align="center">
+<h2>新增群組</h2>
+<form method="get" action="add_group.pl">
+<input type="hidden" name="profile" value="<TMPL_VAR NAME=PROFILE>" />
+<table border="1">
+<tbody>
+<tr class="odd">
+    <th>GROUP NAME</th><td><input type="text" name="group" value="<TMPL_VAR NAME=GROUP>" /></td>
+</tr>
+<tr>
+    <th>GIDNUMBER</th><td><input type="text" name="gidnumber" value="<TMPL_VAR NAME=GIDNUMBER>" /></td>
+</tr>
+<tr class="odd">
+    <th>CONFIRM</th><td><input type="checkbox" name="confirm" value="1"<TMPL_IF NAME=CONFIRM> checked="checked"</TMPL_IF> /></td>
+</tr>
+<tr>
+    <td colspan="2" style="text-align: center;">
+        <input type="submit" />
+        <input type="button" value="取消" onclick="javascript:window.close()" />
+    </td>
+</tr>
+</tbody>
+</table>
+</form>
+<pre>
+<TMPL_VAR NAME=RESULT>
+</pre>
+</div>
+</body>
+<TMPL_INCLUDE NAME="footer.tmpl">

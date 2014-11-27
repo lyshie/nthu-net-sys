@@ -1,0 +1,31 @@
+<TMPL_INCLUDE NAME="header.tmpl">
+<body>
+<TMPL_IF NAME=CONFIRM>
+<script language="javascript">window.opener.location.reload();</script>
+</TMPL_IF>
+<div align="center">
+<h2>檢查帳號</h2>
+<table border="1">
+<tbody>
+<tr class="odd">
+    <th>UID</th><td><TMPL_VAR NAME=UID></td>
+</tr>
+<tr>
+    <th>UIDNUMBER</th><td><TMPL_VAR NAME=UIDNUMBER></td>
+</tr>
+<tr class="odd">
+    <th>GIDNUMBER</th><td><TMPL_VAR NAME=GIDNUMBER></td>
+</tr>
+<tr>
+    <td colspan="2" style="text-align: center;">
+        <input type="button" value="關閉" onclick="javascript:window.close()" />
+    </td>
+</tr>
+</tbody>
+</table>
+<pre style="text-align: left;">
+<TMPL_VAR NAME=RESULT>
+</pre>
+</div>
+</body>
+<TMPL_INCLUDE NAME="footer.tmpl">
