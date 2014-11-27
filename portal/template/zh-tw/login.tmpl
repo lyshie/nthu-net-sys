@@ -1,0 +1,127 @@
+<TMPL_INCLUDE NAME="header.tmpl">
+<body onload="document.login.uid.focus();">
+
+<script type="text/javascript">
+/* <![CDATA[ */
+jQuery.noConflict();
+(function($) { 
+    $(function() {
+        $("#uid").attr("autocomplete", "off");
+        $("#password").attr("autocomplete", "off");
+        $("#validate").attr("autocomplete", "off");
+
+        var first_time = 1;
+
+        $("#uid").change(function() {
+            if (first_time) {
+                var target = "";
+                var pattern = /^(?:u|g|d|s)(\d+)$/;
+                var uid = $("#uid").val();
+                var m = uid.match(pattern);
+                if (m == null) {
+                    target = 'mx';
+                }
+                else {
+                    target = m[1];
+                    if (target.length < 9) {
+                        target = target.substr(0, 2);
+                        if (parseInt(target) < 98)
+                            target = 'oz';
+                        else
+                            target = 'm' + target;
+                        }
+                    else {
+                        target = 'm' + target.substr(0, 3);
+                    }
+                }
+                $("select#profile option[selected]").removeAttr("selected");
+                $("select#profile option[value='" + target + "']").attr("selected", "selected");
+            }
+        });
+
+        $("#valid_img").click(function() {
+            $(this).hide().removeAttr("src").attr("src", "http://service.oz.nthu.edu.tw/cgi-bin/validate/validate.cgi?host=default&amp;timestamp=" + new Date().getTime()).fadeIn(2000).show();
+        });
+    });
+})
+(jQuery);
+
+/* ]]> */
+</script>
+
+<TMPL_INCLUDE NAME="logo_login.tmpl">
+
+<div id="content" class="nav">
+<h2>
+網路系統組線上服務系統登入 (Online Services Login)
+</h2>
+<p><a href="login_openid.cgi">使用 <img src="images/zh-tw/login-openid-16.png" border="0" style="vertical-align: middle;" alt="OpenID" /> OpenID 登入</a></p>
+<form action="login_dispatch.cgi" method="post" name="login">
+<input type="hidden" name="host" value="default" />
+<table border="1">
+<thead>
+<tr>
+	<th>帳號 (Email Account)：</th>
+	<td>
+	<input type="text" name="uid" value="" size="12" id="uid" />
+	@
+	<select id="profile" name="profile">
+	<TMPL_LOOP NAME=LOOP_PROFILE>
+	<option value="<TMPL_VAR NAME=PROFILE ESCAPE=HTML>"<TMPL_IF NAME=SELECTED> selected="selected"</TMPL_IF>><TMPL_VAR NAME=PROFILE_LONG ESCAPE=HTML> (<TMPL_VAR NAME=PROFILE>)</option>
+	</TMPL_LOOP>
+	</select>
+	</td>
+</tr>
+<tr>
+	<th>密碼 (Password)：</th>
+	<td><input type="password" name="password" value="" maxlength="16" /></td>
+</tr>
+<tr>
+	<th>驗證碼 (Validate)：</th>
+	<td>
+		<img id="valid_img" src="http://service.oz.nthu.edu.tw/cgi-bin/validate/validate.cgi?host=default" alt="validate" />
+		<input type="text" name="validate" value="" size="8" maxlength="6" id="validate" />
+		<script type="text/javascript">
+		/* <![CDATA[ */
+			function playVoiceZH() {
+				var wavURL    = "http://service.oz.nthu.edu.tw/cgi-bin/validate/validate_tts.cgi?host=default&amp;lang=zh&amp;timestamp=" + new Date().getTime();
+				var embedCode = '<embed src=' + wavURL + ' hidden="false" autoplay="true" loop="false" width="64" height="32"></embed>' +
+					'<noembed>很抱歉，您的瀏覽器不支援 embed 標籤。</noembed>';
+				document.getElementById("playAudioZH").innerHTML = "";
+				document.getElementById("playAudioZH").innerHTML = embedCode;
+			}
+			document.write("<a href=\"javascript:playVoiceZH();\">語音</a>" +
+					"<span id=\"playAudioZH\"></span>");
+
+			function playVoiceEN() {
+				var wavURL    = "http://service.oz.nthu.edu.tw/cgi-bin/validate/validate_tts.cgi?host=default&amp;timestamp=" + new Date().getTime();
+				var embedCode = '<embed src=' + wavURL + ' hidden="false" autoplay="true" loop="false" width="64" height="32"></embed>' +
+					'<noembed>很抱歉，您的瀏覽器不支援 embed 標籤。</noembed>';
+				document.getElementById("playAudioEN").innerHTML = "";
+				document.getElementById("playAudioEN").innerHTML = embedCode;
+			}
+			document.write("<a href=\"javascript:playVoiceEN();\">Voice</a>" +
+					"<span id=\"playAudioEN\"></span>");
+		/* ]]> */
+		</script>
+		<noscript>
+			<a href="http://service.oz.nthu.edu.tw/cgi-bin/validate/validate_tts.cgi?host=default&amp;lang=zh">語音</a>
+			<a href="http://service.oz.nthu.edu.tw/cgi-bin/validate/validate_tts.cgi?host=default">Voice</a>
+		</noscript>
+	</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td style="text-align: center;" colspan="2">
+	<input type="submit" value="登入 (Login)" />
+	<input type="reset" />
+	</td>
+</tr>
+</tbody>
+</table>
+</form>
+</div>
+
+</body>
+<TMPL_INCLUDE NAME="footer.tmpl">

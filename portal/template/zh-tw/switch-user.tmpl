@@ -1,0 +1,23 @@
+<TMPL_INCLUDE NAME="header.tmpl">
+<body>
+
+<TMPL_INCLUDE NAME="logo.tmpl">
+
+<div id="content" class="nav">
+<h2>
+	<img src="images/zh-tw/switch-user.png" alt="switch-user" align="middle" />
+	切換使用者 (Switch User)
+</h2>
+<form id="switch_user" action="switch-user.cgi?sid=<TMPL_VAR NAME=SID>" method="post" name="switch_user">
+<input type="hidden" name="sid" value="<TMPL_VAR NAME=SID>" />
+電子郵件帳號 (Email account)：<select name="profile" id="profile">
+<TMPL_LOOP NAME="LOOP_USERS">
+<option value="<TMPL_VAR NAME=profile ESCAPE=HTML>"><TMPL_VAR NAME=uid ESCAPE=HTML>@<TMPL_VAR NAME=realm ESCAPE=HTML> (<TMPL_VAR NAME=cn ESCAPE=HTML>)</option>
+</TMPL_LOOP>
+</select>
+<input type="submit" name="submit" value="切換 (Switch)" />
+</form>
+</div>
+
+</body>
+<TMPL_INCLUDE NAME="footer.tmpl">

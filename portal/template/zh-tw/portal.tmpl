@@ -1,0 +1,62 @@
+<TMPL_INCLUDE NAME="header.tmpl">
+<body>
+
+<TMPL_INCLUDE NAME="logo.tmpl">
+
+<div id="content" class="nav">
+<h2>
+歡迎登入網路系統組線上服務 / Welcome to Network Systems Division
+</h2>
+<noscript>
+<h3><span class="alert">本系統部份功能需要 Javascript 支援，建議您啟用 Javascript 支援！</span></h3>
+<h3><span class="alert">Some features of this site require JavaScript, please enable it!</span></h3>
+</noscript>
+<TMPL_IF NAME=IS_SUSPENDED_PASSWORD>
+<TMPL_INCLUDE NAME="suspended_password.tmpl">
+</TMPL_IF>
+<TMPL_IF NAME=IS_STOP_PASSWORD>
+<TMPL_INCLUDE NAME="stop_password.tmpl">
+</TMPL_IF>
+<table border="1">
+<thead>
+<tr>
+	<th>編號 (Student/Staff-ID)</th>
+	<td><TMPL_VAR NAME=ID ESCAPE=HTML> (<TMPL_VAR NAME=ROLE ESCAPE=HTML>)</td>
+</tr>
+<tr>
+	<th>姓名 (Name)</th>
+	<td><TMPL_VAR NAME=NAME ESCAPE=HTML></td>
+</tr>
+<tr>
+	<th>英文姓名 (English Name)</th>
+	<td><TMPL_VAR NAME=NAME_EN ESCAPE=HTML></td>
+</tr>
+<TMPL_IF NAME=OPENID>
+<tr>
+	<th>OpenID</th>
+	<td><TMPL_VAR NAME=OPENID ESCAPE=HTML></td>
+</tr>
+</TMPL_IF>
+<tr>
+	<th>連線來源 (From)</th>
+	<td><TMPL_VAR NAME=REMOTE_ADDR ESCAPE=HTML></td>
+</tr>
+<tr>
+	<th>登入時間 (Login Time)</th>
+	<td><TMPL_VAR NAME=TIMESTAMP ESCAPE=HTML></td>
+</tr>
+<tr>
+	<th>語系 (Language)</th>
+	<td><TMPL_VAR NAME=LANGUAGE ESCAPE=HTML></td>
+</tr>
+</thead>
+<tbody>
+<tr style="display: none;">
+	<td colspan="2"></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+</body>
+<TMPL_INCLUDE NAME="footer.tmpl">

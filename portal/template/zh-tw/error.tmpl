@@ -1,0 +1,17 @@
+<TMPL_INCLUDE NAME="header_expires.tmpl">
+<body>
+
+<TMPL_INCLUDE NAME="logo.tmpl">
+
+<div id="content" class="nav">
+<h2>
+錯誤代碼 (Error code)：<TMPL_VAR NAME=ERROR_ID ESCAPE=HTML>
+<br />
+錯誤訊息 (Error message)：<TMPL_VAR NAME=ERROR_MSG ESCAPE=HTML>
+</h2>
+<br />
+<a href="<TMPL_VAR NAME=REDIR_URI>"><TMPL_VAR NAME=REDIR_MSG></a>
+</div>
+
+</body>
+<TMPL_INCLUDE NAME="footer.tmpl">

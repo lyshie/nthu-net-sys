@@ -1,0 +1,102 @@
+<TMPL_INCLUDE NAME="header_openid.tmpl">
+<body>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+jQuery.noConflict();
+(function($) { 
+    $(function() {
+        $("#openid_username").attr("autocomplete", "off");
+        $("#openid_identifier").attr("autocomplete", "off");
+        $("form.openid").openid();
+    });
+})
+(jQuery);
+
+/* ]]> */
+</script>
+
+<TMPL_INCLUDE NAME="logo_login.tmpl">
+
+<div id="content" class="nav">
+<h2>
+網路系統組線上服務系統登入 (Online Services Login with OpenID)
+</h2>
+<p><a href="login.cgi">使用校內信箱登入</a></p>
+<ol>
+    <li><a href="http://net.nthu.edu.tw/2009/service:portal:login_openid" target="_blank">如何使用 OpenID 登入網路系統組線上服務？</a></li>
+    <li>什麼是 OpenID：<a href="http://zh.wikipedia.org/zh-tw/OpenID" target="_blank">維基百科</a>、<a href="https://myid.tw/profile/help" target="_blank">myID.tw FAQ 問答集</a></li>
+    <li><a href="http://openid.net/get-an-openid/" target="_blank">取得 OpenID</a> (如：<a href="http://myid.tw/" target="_blank">myID.tw</a>)</li>
+    <li><span class="alert">登出本系統，並不會登出您的 OpenID！</span></li>
+    <li><span class="alert">若您是在公用電腦上登入本系統，請務必記得登出您的 OpenID！</span></li>
+</ol>
+
+<div style="clear: both;"></div>
+
+<form class="openid" method="get" action="login_openid_sender.cgi"> 
+    <div id="openid_form">
+    <ul class="providers"> 
+    <li class="openid" title="OpenID">
+        <img src="images/zh-tw/openid/openidW.png" alt="icon" /><span><strong>http://{your-openid-url}</strong></span>
+    </li>
+    <li class="username" title="Google">
+        <img src="images/zh-tw/openid/googleW.png" alt="icon" /><span>http://www.google.com/profiles/<strong>username</strong></span>
+    </li>
+    <li class="direct" title="Yahoo">
+        <img src="images/zh-tw/openid/yahooW.png" alt="icon" /><span>http://me.yahoo.com/</span>
+    </li>
+    <li class="username" title="AOL screen name">
+        <img src="images/zh-tw/openid/aolW.png" alt="icon" /><span>http://openid.aol.com/<strong>username</strong></span>
+    </li>
+    <li class="username" title="MyOpenID user name">
+        <img src="images/zh-tw/openid/myopenidW.png" alt="icon" /><span>http://<strong>username</strong>.myopenid.com/</span>
+    </li>
+    <li class="username" title="Flickr user name">
+        <img src="images/zh-tw/openid/flickrW.png" alt="icon" /><span>http://flickr.com/<strong>username</strong>/</span>
+    </li>
+    <li class="username" title="Technorati user name">
+        <img src="images/zh-tw/openid/technorati.png" alt="icon" /><span>http://technorati.com/people/technorati/<strong>username</strong>/</span>
+    </li>
+    <li class="username" title="Wordpress blog name">
+        <img src="images/zh-tw/openid/wordpress.png" alt="icon" /><span>http://<strong>username</strong>.wordpress.com</span>
+    </li>
+    <li class="username" title="Blogger blog name">
+        <img src="images/zh-tw/openid/blogger.png" alt="icon" /><span>http://<strong>username</strong>.blogspot.com/</span>
+    </li>
+    <li class="username" title="LiveJournal blog name">
+        <img src="images/zh-tw/openid/livejournal.png" alt="icon" /><span>http://<strong>username</strong>.livejournal.com</span>
+    </li>
+    <li class="username" title="ClaimID user name">
+        <img src="images/zh-tw/openid/claimid.png" alt="icon" /><span>http://claimid.com/<strong>username</strong></span>
+    </li>
+    <li class="username" title="Vidoop user name">
+        <img src="images/zh-tw/openid/vidoop.png" alt="icon" /><span>http://<strong>username</strong>.myvidoop.com/</span>
+    </li>
+    <li class="username" title="Verisign user name">
+        <img src="images/zh-tw/openid/verisign.png" alt="icon" /><span>http://<strong>username</strong>.pip.verisignlabs.com/</span>
+    </li>
+    <li class="username" title="myID.tw user name">
+        <img src="images/zh-tw/openid/myid-tw.png" alt="icon" /><span>http://<strong>username</strong>.myid.tw/</span>
+    </li>
+    </ul>
+    </div> 
+
+    <fieldset>
+        <label for="openid_username">Enter your <span>Provider user name</span></label>
+        <div>
+        <span></span><input type="text" name="openid_username" id="openid_username" /><span></span>
+        <input type="submit" value="登入 (Login)" />
+        </div> 
+    </fieldset>
+    <fieldset>
+        <label for="openid_identifier">Enter your <a class="openid_logo" href="http://openid.net" target="_blank">OpenID</a></label>
+        <div>
+        <input type="text" name="openid_identifier" id="openid_identifier" />
+        <input type="submit" value="登入 (Login)" />
+        </div>
+    </fieldset> 
+</form>
+</div>
+
+</body>
+<TMPL_INCLUDE NAME="footer.tmpl">

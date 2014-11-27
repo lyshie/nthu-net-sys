@@ -1,0 +1,40 @@
+<TMPL_INCLUDE NAME="header.tmpl">
+<body>
+
+<TMPL_INCLUDE NAME="logo.tmpl">
+
+<div id="content" class="nav">
+<h2>
+	<img src="images/zh-tw/apply-email.png" alt="apply-email" align="middle" />
+	電子郵件帳號申請 (New Email Account)
+	<br />
+	<span style="font-style: italic;">
+		&nbsp;&nbsp;&nbsp;Step:
+		<span style="color: black;">1 詳閱規範</span>
+		<span style="color: #ccc; ">2 詳閱規範</span>
+		<span style="color: #ccc; ">3 設定帳號密碼</span>
+		<span style="color: #ccc; ">4 完成申請</span>
+	</span>
+</h2>
+<table border="1">
+<tbody>
+<tr>
+	<td>
+		<iframe src="https://net.nthu.edu.tw/2009/law:netrule?do=export_xhtml" width="100%" height="300" frameborder="0"></iframe>
+	</td>
+</tr>
+<tr>
+	<td colspan="2" style="text-align: center;">
+		本人已詳閱並同意履行本校「<a href="https://net.nthu.edu.tw/2009/law:netrule?do=export_xhtml" target="_blank">校園網路使用規範</a>」中之各項條文，此致<br />
+國立清華大學<br />
+I certify that the information which I have provided on this application is complete and correct. I will abide by all regulations from the Computer and Communication Center.<br />
+		<a href="portal.cgi?sid=<TMPL_VAR NAME=SID>"><input type="button" value="不同意 (Reject)" onclick="javascript:gotourl('portal.cgi?sid=<TMPL_VAR NAME=SID>');" /></a>
+		<a href="apply-email-2.cgi?sid=<TMPL_VAR NAME=SID>"><input type="button" value="同意，繼續 (Accept and Continue) &gt;&gt;" onclick="javascript:gotourl('apply-email-2.cgi?sid=<TMPL_VAR NAME=SID>');" style="border: 3px solid #cc9; padding: 2px;" /></a>
+	</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+</body>
+<TMPL_INCLUDE NAME="footer.tmpl">

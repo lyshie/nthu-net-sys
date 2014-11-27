@@ -1,0 +1,23 @@
+<TMPL_VAR NAME=EMAIL> 您好：
+
+因為 <TMPL_VAR NAME=FROM> 欲設定您的信箱（<TMPL_VAR NAME=EMAIL>）作為
+其帳號聯絡用電子郵件信箱，若您同意的話，請於一天內點擊以下連結，逾期失效。
+
+http://<TMPL_VAR NAME=HTTP_HOST>/portal/ticket.cgi?number=<TMPL_VAR NAME=TICKET_NUMBER>
+
+相關說明請參閱網址：http://net.nthu.edu.tw/2009/mail:email2
+=======================================================================
+
+Hi <TMPL_VAR NAME=EMAIL>
+
+Because <TMPL_VAR NAME=FROM> would like to set your email address (<TMPL_VAR NAME=EMAIL>)
+to be used for receiving his/her account notification, please click
+the following URL in one day, if you agree.
+
+http://<TMPL_VAR NAME=HTTP_HOST>/portal/ticket.cgi?number=<TMPL_VAR NAME=TICKET_NUMBER>
+
+For more information, please refer to http://net.nthu.edu.tw/2009/mail:email2
+=======================================================================
+[Reference]
+IP address: <TMPL_VAR NAME=REMOTE_ADDR>
+TTL: <TMPL_VAR NAME=TTL> seconds

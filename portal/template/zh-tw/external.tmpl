@@ -1,0 +1,36 @@
+<TMPL_INCLUDE NAME="header.tmpl">
+<body>
+
+<TMPL_INCLUDE NAME="logo.tmpl">
+
+<div id="content" class="nav">
+
+<iframe class="wrapperala" id="viewer" src="<TMPL_VAR NAME=URL>?sid=<TMPL_VAR NAME=SID>" width="95%" height="600" frameborder="0">
+</iframe>
+
+</div>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+jQuery.noConflict();
+(function($) { 
+    $(window).resize(function() {
+        $('.wrapperala').height( ( $(window).height() -
+                                   $('.wrapperala').offset().top -
+                                   ( $('.wrapperala').outerHeight(true) - $('.wrapperala').height() )
+                                 ) - 20
+                               );
+        $('.wrapperala').width( ( $(window).width() -
+                                  $('.wrapperala').offset().right -
+                                  ( $('.wrapperala').outerWidth(true) - $('.wrapperala').width() )
+                                ) - 20
+                              );
+    });
+    $(window).resize();
+})
+(jQuery);
+/* ]]> */
+</script>
+
+</body>
+<TMPL_INCLUDE NAME="footer.tmpl">

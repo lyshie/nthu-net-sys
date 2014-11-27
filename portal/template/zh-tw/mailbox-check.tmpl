@@ -1,0 +1,99 @@
+<TMPL_INCLUDE NAME="header.tmpl">
+<body>
+
+<TMPL_INCLUDE NAME="logo.tmpl">
+
+<div id="content" class="nav">
+<h2>
+	<img src="images/zh-tw/mailbox-check.png" alt="mailbox-check" align="middle" />
+	信箱檢測 (Mailbox Check)
+</h2>
+<table border="0">
+<thead>
+<tr>
+	<th>項目</th>
+	<th>資訊</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td>信箱名稱</td>
+	<td><TMPL_VAR NAME=EMAIL></td>
+</tr>
+<tr>
+	<td>硬碟容量</td>
+	<td>
+		已使用：<TMPL_VAR NAME=DISK_USAGE>
+		<br />
+		總計：<TMPL_VAR NAME=DISK_QUOTA>
+		<br />
+		<div style="position: relative; width: 100px; height:16px; background-color: #555555; border: 1px solid black;">
+		<div style="width: <TMPL_VAR NAME=DISK_PERCENT>px; height:16px; background-color: #4AC348; display: block;">
+		<div style="position: absolute; width: 100px; text-align: center; color: white; font-size: 10px;"><TMPL_VAR NAME=DISK_PERCENT>%</div>
+		</div>
+		</div>
+	</td>
+</tr>
+<tr>
+	<td>個人信箱目錄 .MBOX</td>
+	<td>
+	<TMPL_IF NAME=.MBOX>
+		已使用硬碟容量：<TMPL_VAR NAME=.MBOX_SIZE>
+		<br />
+		已使用檔案數量(含目錄)：<TMPL_VAR NAME=.MBOX_FILES>
+	<TMPL_ELSE>
+		<span class="alert">您尚未建立個人網頁目錄 .MBOX</span>
+	</TMPL_IF>
+	</td>
+</tr>
+<tr>
+	<td>個人網頁目錄 WWW</td>
+	<td>
+	<TMPL_IF NAME=WWW>
+		已使用硬碟容量：<TMPL_VAR NAME=WWW_SIZE>
+		<br />
+		已使用檔案數量(含目錄)：<TMPL_VAR NAME=WWW_FILES>
+	<TMPL_ELSE>
+		<span class="alert"><a href="http://net.nthu.edu.tw/2009/webpage:browse" target="_blank">您尚未建立個人網頁目錄 WWW</a></span>
+	</TMPL_IF>
+	</td>
+</tr>
+</tbody>
+</table>
+<TMPL_IF NAME=PASSWORD>
+<p>POP 信箱檢測結果：</p>
+<TMPL_UNLESS NAME=POP_MSG>
+<p>總計 <TMPL_VAR NAME=POP_COUNT> 封信在收件匣中</p>
+<table border="0">
+<thead>
+<tr>
+	<th style="text-align: center;">NO.</th>
+	<th>From</th>
+	<th>Subject</th>
+</tr>
+</thead>
+<tbody>
+<TMPL_LOOP NAME=LOOP_POP_INFO>
+<tr>
+	<td style="text-align: center;"><TMPL_VAR NAME=number ESCAPE=HTML></td>
+	<td><TMPL_VAR NAME=from ESCAPE=HTML></td>
+	<td><TMPL_VAR NAME=subject ESCAPE=HTML></td>
+</tr>
+</TMPL_LOOP>
+</tbody>
+</table>
+<TMPL_ELSE>
+<pre class="alert"><TMPL_VAR NAME=POP_MSG></pre>
+</TMPL_UNLESS>
+<TMPL_ELSE>
+<br />
+<form action="#" method="post">
+<input type="hidden" id="sid" name="sid" value="<TMPL_VAR NAME=SID>" />
+信箱密碼：<input type="password" id="password" name="password" value="" />
+<input type="submit" value="POP 信箱檢測" />
+</form>
+</TMPL_IF>
+</div>
+
+</body>
+<TMPL_INCLUDE NAME="footer.tmpl">

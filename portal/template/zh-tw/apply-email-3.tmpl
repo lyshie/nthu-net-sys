@@ -1,0 +1,137 @@
+<TMPL_INCLUDE NAME="header_validate.tmpl">
+<body onload="document.apply_email.password.focus();">
+
+<TMPL_INCLUDE NAME="logo.tmpl">
+
+<div id="content" class="nav">
+<h2>
+	<img src="images/zh-tw/apply-email.png" alt="apply-email" align="middle" />
+	電子郵件帳號申請 (New Email Account)
+	<br />
+	<span style="font-style: italic;">
+		&nbsp;&nbsp;&nbsp;Step:
+		<span style="color: #ccc; ">1 詳閱規範</span>
+		<span style="color: #ccc; ">2 詳閱規範</span>
+		<span style="color: black;">3 設定帳號密碼</span>
+		<span style="color: #ccc; ">4 完成申請</span>
+	</span>
+</h2>
+<noscript>
+<h3><span class="alert">本系統部份功能需要 Javascript 支援，建議您啟用 Javascript 支援！</span></h3>
+<h3><span class="alert">Some features of this site require JavaScript, please enable it!</span></h3>
+</noscript>
+<form id="apply_email" action="apply-email.cgi?sid=<TMPL_VAR NAME=SID>" method="post" name="apply_email">
+<input type="hidden" name="sid" value="<TMPL_VAR NAME=SID>" />
+<input type="hidden" class="username" name="username" id="username" value="<TMPL_VAR NAME=ID ESCAPE=HTML>" />
+<table border="1">
+<thead>
+<!--
+<tr>
+	<th>級數 (Degree)：</th>
+	<td><TMPL_VAR NAME=DEGREE ESCAPE=HTML></td>
+</tr>
+-->
+<tr>
+	<th>編號 (Student/Staff-ID)：</th>
+	<td><TMPL_VAR NAME=ID ESCAPE=HTML></td>
+</tr>
+<tr>
+	<th>姓名 (Name)：</th>
+	<td><TMPL_VAR NAME=NAME ESCAPE=HTML></td>
+</tr>
+<tr>
+	<th>英文姓名 (English Name)：</th>
+	<td>
+	<TMPL_IF NAME=NAME_EN>
+		<TMPL_VAR NAME=NAME_EN ESCAPE=HTML>
+	<TMPL_ELSE>
+		<TMPL_IF NAME=IS_CHECK_NAME_EN><h3 class="alert blink">您尚未設定英文姓名，請至校務資訊系統<br />「人事功能」→「基本資料」→「修改」，<br />填妥「護照英文姓名」後，再登入本服務。</h3></TMPL_IF>
+	</TMPL_IF>
+	</td>
+</tr>
+<TMPL_IF NAME=IS_EXIST>
+<tr>
+	<th>狀態 (Status)：</th>
+	<td>帳號已存在，不需要重新申請</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td colspan="2" style="text-align: center;">
+		<a href="portal.cgi?sid=<TMPL_VAR NAME=SID>"><input type="button" value="取消申請 (Cancel)" onclick="javascript:gotourl('portal.cgi?sid=<TMPL_VAR NAME=SID>');" /></a>
+	</td>
+</tr>
+<TMPL_ELSIF NAME=IS_SUSPENDED>
+<tr>
+	<th>狀態 (Status)：</th>
+	<td>帳號已被停用，無法申請</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td colspan="2" style="text-align: center;">
+		<a href="portal.cgi?sid=<TMPL_VAR NAME=SID>"><input type="button" value="取消申請 (Cancel)" onclick="javascript:gotourl('portal.cgi?sid=<TMPL_VAR NAME=SID>');" /></a>
+	</td>
+</tr>
+<TMPL_ELSE>
+<tr>
+	<th>電子郵件帳號 (Email)：</th>
+	<td>
+	<TMPL_IF NAME=EMAIL>
+		<TMPL_VAR NAME=EMAIL ESCAPE=HTML>
+	<TMPL_ELSE>
+		<select name="uid" id="uid" style="border: 3px solid #cc9; padding: 2px;">
+		<option value="" disabled="disabled" selected="selected">
+		-- 選項 (Options) --
+		</option>
+		<TMPL_LOOP NAME=LOOP_NAMES>
+			<option value="<TMPL_VAR NAME=crypt ESCAPE=HTML>"><TMPL_VAR NAME=suggest_name ESCAPE=HTML></option>
+		</TMPL_LOOP>
+		</select>
+		@mx.nthu.edu.tw
+	</TMPL_IF>
+	</td>
+</tr>
+<tr>
+	<th><label for="password"><b>信箱</b>新密碼 (New Password)：</label></th>
+	<td>
+		<input class="password" type="password" name="password" id="password" maxlength="16" style="border: 3px solid #cc9; padding: 2px;" />
+		<div class="password-meter" style="float: right;">
+			<div class="password-meter-message">&nbsp;</div>
+		</div>
+	</td>
+</tr>
+<tr>
+	<th><label for="password_confirm">新密碼確認 (Confirm)：</label></th>
+	<td>
+		<input type="password" name="password_confirm" id="password_confirm" style="border: 3px solid #cc9; padding: 2px;" />
+	</td>
+</tr>
+<tr>
+	<th>狀態 (Status)：</th>
+	<td>新申請帳號 (New Apply)</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td colspan="2" style="text-align: center;">
+		<a href="portal.cgi?sid=<TMPL_VAR NAME=SID>"><input type="button" value="取消申請 (Cancel)" onclick="javascript:gotourl('portal.cgi?sid=<TMPL_VAR NAME=SID>');" /></a>
+		<input type="submit" value="確定申請 (Apply) &gt;&gt;" style="border: 3px solid #cc9; padding: 2px;" />
+	</td>
+</tr>
+</TMPL_IF>
+</tbody>
+</table>
+</form>
+<ul>
+	<li>英文姓名取自校務資訊系統中的「護照英文姓名」，如需變更請至校務資訊系統。</li>
+	<li><span class="alert">密碼強度須為「<strong>好</strong>」或「<strong>很強</strong>」，方可送出申請。</span></li>
+	<li><span class="alert">Password strength must be <strong>GOOD</strong> or <strong>STRONG</strong> before you will be able to submit.</span></li>
+	<li>信箱功能及設定一覽表：<a href="http://net.nthu.edu.tw/2009/mail:student" target="_blank">http://net.nthu.edu.tw/2009/mail:student</a></li>
+	<li>詳細資訊請參考本組網站：<a href="http://net.nthu.edu.tw/" target="_blank">http://net.nthu.edu.tw/</a></li>
+	<li>Please refer to our site for further information: <a href="http://net.nthu.edu.tw/" target="_blank">http://net.nthu.edu.tw/</a></li>
+</ul>
+</div>
+
+</body>
+<TMPL_INCLUDE NAME="footer.tmpl">

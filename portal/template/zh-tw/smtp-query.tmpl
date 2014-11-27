@@ -1,0 +1,95 @@
+<TMPL_INCLUDE NAME="header.tmpl">
+<body>
+
+<TMPL_INCLUDE NAME="logo.tmpl">
+
+<div id="content" class="nav">
+<h2>
+	<img src="images/zh-tw/smtp-query.png" alt="smtp-query" align="middle" />
+	寄信紀錄查詢 (SMTP Query)
+</h2>
+<form action="https://service.oz.nthu.edu.tw/cgi-bin/cgiwrap/logger/smtp/trigger2.cgi" method="post" target="_blank">
+<input type="hidden" name="sid" value="<TMPL_VAR NAME=SID>" />
+<table border="0">
+<thead>
+<tr>
+	<th>電子郵件信箱 (E-mail)：</th>
+	<td><TMPL_VAR NAME=EMAIL ESCAPE=HTML></td>
+</tr>
+<tr>
+	<th>起始時間 (Begin)：</th>
+	<td>
+		<input type="text" name="begin" id="begin" readonly="readonly" />
+		<!--
+		<select name="begin">
+		<TMPL_LOOP NAME=LOOP_DATES>
+		<option value="<TMPL_VAR NAME=date>"><TMPL_VAR NAME=date></option>
+		</TMPL_LOOP>
+		</select>
+		-->
+	</td>
+</tr>
+<tr>
+	<th>結束時間 (End)：</th>
+	<td>
+		<input type="text" name="end" id="end" readonly="readonly" />
+		<!--
+		<select name="end">
+		<TMPL_LOOP NAME=LOOP_DATES_REV>
+		<option value="<TMPL_VAR NAME=date>"><TMPL_VAR NAME=date></option>
+		</TMPL_LOOP>
+		</select>
+		-->
+	</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td colspan="2" style="text-align: center;">
+		<input type="reset" />
+		<input type="submit" />
+	</td>
+</tr>
+</tbody>
+</table>
+</form>
+</div>
+
+<script type="text/javascript" src="js/zh-tw/ui/jquery.ui.core.js"></script>
+<script type="text/javascript" src="js/zh-tw/ui/jquery.ui.datepicker.js"></script>
+<script type="text/javascript" src="js/zh-tw/ui/i18n/jquery.ui.datepicker-zh-TW.js"></script>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+jQuery.noConflict();
+(function($) { 
+	$("head").append("<link>");
+	var css = $("head").children(":last");
+	css.attr({
+		rel:  "stylesheet", 
+		type: "text/css", 
+		href: "js/zh-tw/themes/ui-lightness/jquery.ui.all.css"
+	});
+
+    var dates = $("#begin, #end").datepicker({
+		minDate: "-30d",
+		maxDate: "-1d",
+        altFormat: 'yy-mm-dd',
+        dateFormat: 'yy-mm-dd',
+        onSelect: function( selectedDate ) {
+            var option = this.id == "begin" ? "minDate" : "maxDate",
+                instance = $( this ).data( "datepicker" );
+            date = $.datepicker.parseDate(
+                       instance.settings.dateFormat ||
+                       $.datepicker._defaults.dateFormat,
+                       selectedDate, instance.settings );
+            dates.not( this ).datepicker( "option", option, date );
+        }
+    });
+})
+(jQuery);
+/* ]]> */
+</script>
+
+</body>
+<TMPL_INCLUDE NAME="footer.tmpl">

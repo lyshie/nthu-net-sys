@@ -1,0 +1,181 @@
+<div id="sidebar" class="nav">
+<img src="images/zh-tw/logo.png" alt="logo" />
+<p style="clear: both;"></p>
+
+<ul id="cssdropdown">
+<li class="headlink">
+<a>系統功能<br />System functions</a>
+	<ul>
+	<li>
+		<a href="portal.cgi?sid=<TMPL_VAR NAME=SID>">
+		<img class="logo_item" src="images/zh-tw/home-16.png" alt="home" align="middle" border="0" />
+		首頁<br />Home
+		</a>
+	</li>
+<!--
+	<li>
+		<a href="switch-user.cgi?sid=<TMPL_VAR NAME=SID>">
+		<img class="logo_item" src="images/zh-tw/switch-user-16.png" alt="switch-user" align="middle" border="0" />
+		切換使用者<br />Switch User
+		</a>
+	</li>
+-->
+	<li>
+		<a href="cfg_dispatch.cgi?sid=<TMPL_VAR NAME=SID>">
+		<img class="logo_item" src="images/zh-tw/configure-16.png" alt="configure" align="middle" border="0" />
+		個人資訊設定<br />Configure
+		</a>
+	</li>
+<!--
+        <li>
+                <a href="http://net.nthu.edu.tw/2009/faq:ask_a_good_question" target="_blank">
+                <img class="logo_item" src="images/zh-tw/question-16.png" alt="question" align="middle" border="0" />
+		回報問題<br />Report Question
+		</a>
+        </li>
+-->
+	<li>
+		<a href="logout.cgi?sid=<TMPL_VAR NAME=SID>" title="將同時登出校務資訊系統">
+		<img class="logo_item" src="images/zh-tw/logout-16.png" alt="logout" align="middle" border="0" />
+		登出<br />Logout
+		</a>
+	</li>
+	</ul>
+</li>
+<li class="headlink">
+<a>電子郵件服務<br />Email services</a>
+	<ul>
+	<li>
+		<a href="ae_dispatch.cgi?sid=<TMPL_VAR NAME=SID>">
+		<img class="logo_item" src="images/zh-tw/apply-email-16.png" alt="apply-email" align="middle" border="0" />
+		電子郵件帳號申請<br />New Email Account
+		</a>
+	</li>
+	<li>
+		<a href="cp_dispatch.cgi?sid=<TMPL_VAR NAME=SID>">
+		<img class="logo_item" src="images/zh-tw/change-password-16.png" alt="change-password" align="middle" border="0" />
+		電子郵件密碼變更<br />Change Password
+		</a>
+	</li>
+	<li>
+		<a href="vl_dispatch.cgi?sid=<TMPL_VAR NAME=SID>">
+		<img class="logo_item" src="images/zh-tw/view-log-16.png" alt="view-log" align="middle" border="0" />
+		查看紀錄<br />View Log
+		</a>
+	</li>
+	<li>
+		<!--<a href="external.cgi?sid=<TMPL_VAR NAME=SID>&amp;plugin=logger" title="外部連結">-->
+		<a href="http://service.oz.nthu.edu.tw/cgi-bin/cgiwrap/logger/all/query2.cgi?sid=<TMPL_VAR NAME=SID>" target="_blank" title="外部連結">
+		<img class="logo_item" src="images/zh-tw/view-log-16.png" alt="view-log" align="middle" border="0" />
+		信箱存取記錄查詢<br />Mailbox Access Log Query
+		</a>
+	</li>
+	<li>
+		<!--<a href="external.cgi?sid=<TMPL_VAR NAME=SID>&amp;plugin=smtp_query" title="外部連結">-->
+		<a href="smtp-query.cgi?sid=<TMPL_VAR NAME=SID>">
+		<img class="logo_item" src="images/zh-tw/smtp-query-16.png" alt="smtp-query" align="middle" border="0" />
+		寄信紀錄查詢<br />SMTP Query
+		</a>
+	</li>
+	<li>
+		<a href="mailbox-check.cgi?sid=<TMPL_VAR NAME=SID>">
+		<img class="logo_item" src="images/zh-tw/mailbox-check-16.png" alt="mailbox-check" align="middle" border="0" />
+		信箱檢測<br />Mailbox Check
+		</a>
+	</li>
+	<li>
+		<!--<a href="external.cgi?sid=<TMPL_VAR NAME=SID>&amp;plugin=logger" title="外部連結">-->
+		<a href="http://service.oz.nthu.edu.tw/cgi-bin/smtp-white-ip-ua.cgi?sid=<TMPL_VAR NAME=SID>" target="_blank" title="外部連結">
+		<img class="logo_item" src="images/zh-tw/view-log-16.png" alt="view-log" align="middle" border="0" />
+		寄信 IP 白名單服務<br />SMTP White List
+		</a>
+	</li>
+	</ul>
+</li>
+<li class="headlink">
+<a>無線網路服務<br />WLAN services</a>
+	<ul>
+	<li>
+		<a href="https://www.wlan.nthu.edu.tw/~wlan/cgi-bin/AP/MyXPmain.pl?sid=<TMPL_VAR NAME=SID>" target="_blank">
+		<img class="logo_item" src="images/zh-tw/wireless-16.png" alt="wireless" align="middle" border="0" />
+		無線區域網路帳號<br />Wireless LAN Account
+		</a>
+	</li>
+	</ul>
+</li>
+<li class="headlink">
+<a>學生宿舍網路服務<br />DormNet services</a>
+	<ul>
+	<li>
+		<a href="https://dormnet.cc.nthu.edu.tw/~dormnet/cgi-bin/UAS/MyUasXPmain.pl?sid=<TMPL_VAR NAME=SID>" target="_blank">
+		<img class="logo_item" src="images/zh-tw/unknown-16.png" alt="dormnet" align="middle" border="0" />
+		學生宿舍網路帳號<br />DormNet Account
+		</a>
+	</li>
+	</ul>
+</li>
+<TMPL_IF NAME=IS_TEST>
+<li class="headlink">
+<a>測試模式<br />Testing Mode</a>
+	<ul>
+	<li>
+		<a href="ask.cgi?sid=<TMPL_VAR NAME=SID>">
+		<img class="logo_item" src="images/zh-tw/unknown-16.png" alt="ask" align="middle" border="0" />
+		Session 資料<br />Session Data
+		</a>
+	</li>
+	<li>
+		<a href="test.cgi?sid=<TMPL_VAR NAME=SID>">
+		<img class="logo_item" src="images/zh-tw/unknown-16.png" alt="test" align="middle" border="0" />
+		測試列表<br />Test List
+		</a>
+	</li>
+	<li>
+		<a href="test.cgi?sid=<TMPL_VAR NAME=SID>&amp;mode=env">
+		<img class="logo_item" src="images/zh-tw/unknown-16.png" alt="test" align="middle" border="0" />
+		環境變數<br />Environment Vars
+		</a>
+	</li>
+	</ul>
+</li>
+</TMPL_IF>
+</ul>
+
+<p style="clear: both;"></p>
+<br />
+<a class="help" onclick="return popitup('http://net.nthu.edu.tw/2009/help:portal<TMPL_IF NAME=PROG>:<TMPL_VAR NAME=PROG ESCAPE=JS></TMPL_IF>?do=export_xhtml')"><img class="help" src="images/zh-tw/help-16.png" alt="help" align="middle" onclick="return popitup('http://net.nthu.edu.tw/2009/help:portal<TMPL_IF NAME=PROG>:<TMPL_VAR NAME=PROG ESCAPE=JS></TMPL_IF>?do=export_xhtml')" /> 說明 Help</a>
+<hr />
+<p>
+本系統由網路系統組開發維護，如有問題請<a href="http://net.nthu.edu.tw/2009/about:contact" target="_blank">聯絡我們</a>。
+</p>
+<p>
+<img style="border: 0pt none; width: 80px; height: 15px;" src="images/zh-tw/button-xhtml.png" alt="Valid XHTML 1.0 Transitional" border="0" height="15" width="80" />
+</p>
+</div>
+
+<div id="float_bar" title="將同時登出校務資訊系統">
+<ul>
+<li>
+	<a href="logout.cgi?sid=<TMPL_VAR NAME=SID>"><img class="logo_item" src="images/zh-tw/logout-16.png" alt="logout" align="middle" border="0" />登出 (Logout)</a>
+</li>
+</ul>
+</div>
+<script type="text/javascript">
+/* <![CDATA[ */
+jQuery.noConflict();
+(function($) { 
+    //$("#float_bar").tooltip({
+    $('* :not([title=""])').tooltip({
+        delay: 0,
+        showURL: false,
+        fade: 250,
+        positionLeft: true
+    });
+})
+(jQuery);
+/* ]]> */
+</script>
+
+<div id="footer_banner">
+Designed by lyshie(at)mx(dot)nthu(dot)edu(dot)tw
+</div>

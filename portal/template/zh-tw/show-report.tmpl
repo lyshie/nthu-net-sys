@@ -1,0 +1,39 @@
+<TMPL_INCLUDE NAME="header_validate.tmpl">
+<body>
+
+<TMPL_INCLUDE NAME="logo.tmpl">
+
+<div id="content" class="nav">
+<h2>
+	<img src="images/zh-tw/question.png" alt="question" align="middle" />
+	問題列表 (Question List)
+</h2>
+<p><a href="do-report.cgi?sid=<TMPL_VAR NAME=SID>">回報問題 (Report Question)</a></p>
+<table border="1">
+<thead>
+<tr>
+	<th>問題內容 (Question)</th>
+	<th>資訊 (Information)</th>
+</tr>
+</thead>
+<tbody>
+<TMPL_LOOP NAME=REPORT_LOOP>
+<tr>
+	<td>
+		<TMPL_VAR NAME=MESSAGE>
+	</td>
+	<td>
+		<ul>
+		<li>編號 (ID)：<TMPL_VAR NAME=ID></li>
+		<li>時間 (TIME)：<TMPL_VAR NAME=TIME></li>
+		<li>來源位址 (IP)：<TMPL_VAR NAME=IP></li>
+		</ul>
+	</td>
+</tr>
+</TMPL_LOOP>
+</tbody>
+</table>
+</div>
+
+</body>
+<TMPL_INCLUDE NAME="footer.tmpl">

@@ -1,0 +1,23 @@
+<TMPL_INCLUDE NAME="header_expires.tmpl">
+<body>
+
+<TMPL_INCLUDE NAME="logo.tmpl">
+
+<div id="content" class="nav">
+<h3>
+姓名：<TMPL_VAR NAME=NAME>
+<br />
+編號：<TMPL_VAR NAME=ID>
+<br />
+身份：<TMPL_VAR NAME=ROLE>
+<br />
+來源位址：<TMPL_VAR NAME=IP>
+<br />
+登入時間：<TMPL_VAR NAME=TIMESTAMP>
+</h3>
+<br />
+<a href="portal.cgi?sid=<TMPL_VAR NAME=SID>">進入網路系統組 Portal</a>
+</div>
+
+</body>
+<TMPL_INCLUDE NAME="footer.tmpl">

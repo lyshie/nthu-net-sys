@@ -1,0 +1,21 @@
+/* General */
+#cssdropdown, #cssdropdown ul { list-style: none; }
+#cssdropdown, #cssdropdown * { padding: 0; margin: 0; }
+
+/* Head links */
+#cssdropdown li.headlink { width: 90%; float: left; margin-left: -1px; border: 1px #666 solid; text-align: center; background: url('more.png') no-repeat right center; cursor: pointer; }
+#cssdropdown li.headlink a { display: block; padding: 8px; }
+
+/* Child lists and links */
+#cssdropdown li.headlink ul { block: none; border-top: 1px black solid; text-align: left; }
+#cssdropdown li.headlink:hover ul { display: block; }
+#cssdropdown li.headlink ul li a { color: white; padding: 4px; height: 32px; margin: 2px; }
+#cssdropdown li.headlink ul li a:hover { color: #333; background-color: #E5E5CB; }
+
+#cssdropdown a { color: black; }
+#cssdropdown ul li a:hover { text-decoration: none; }
+#cssdropdown li.headlink { background-color: #cc9; }
+#cssdropdown li.headlink:hover { background: #cc9; }
+#cssdropdown li.headlink ul { background-color: #555; background-position: bottom; padding-bottom: 2px; }
+
+#cssdropdown img.logo_item { margin: 4px; float: left; }

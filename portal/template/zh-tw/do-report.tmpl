@@ -1,0 +1,42 @@
+<TMPL_INCLUDE NAME="header_validate.tmpl">
+<body onload="document.report.message.focus();">
+
+<TMPL_INCLUDE NAME="logo.tmpl">
+
+<div id="content" class="nav">
+<h2>
+	<img src="images/zh-tw/question.png" alt="question" align="middle" />
+	回報問題 (Report Question)
+</h2>
+<p><a href="show-report.cgi?sid=<TMPL_VAR NAME=SID>">問題列表 (Question List)</a></p>
+<form id="report" action="do-report.cgi?sid=<TMPL_VAR NAME=SID>" method="post" name="report">
+<input type="hidden" name="sid" value="<TMPL_VAR NAME=SID>" />
+<input type="hidden" name="action" value="report" />
+<table border="1">
+<thead>
+<tr>
+	<th>問題內容 (Question)：</th>
+	<td><textarea name="message" cols="60" rows="10"></textarea></td>
+</tr>
+<tr>
+	<th>確認送出 (Confirm)：</th>
+	<td><input type="checkbox" name="confirm" value="1" /></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td colspan="2" style="text-align: center;">
+		<input type="submit" value="回報 (Report)" />
+		<input type="reset" />
+	</td>
+</tr>
+</tbody>
+</table>
+</form>
+
+<iframe src="https://net.nthu.edu.tw/2009/faq:ask_a_good_question?do=export_xhtml" width="80%" height="500" frameborder="0"></iframe>
+
+</div>
+
+</body>
+<TMPL_INCLUDE NAME="footer.tmpl">

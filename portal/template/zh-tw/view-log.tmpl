@@ -1,0 +1,24 @@
+<TMPL_INCLUDE NAME="header.tmpl">
+<body>
+
+<TMPL_INCLUDE NAME="logo.tmpl">
+
+<div id="content" class="nav">
+<h2>
+	<img src="images/zh-tw/view-log.png" alt="view-log" align="middle" />
+	查看紀錄 (View Log)
+</h2>
+<table>
+<thead>
+<tr><th>時間 (Time)</th><th>事件 (Event)</th><th>來源位址 (IP)</th></tr>
+</thead>
+<tbody>
+<TMPL_LOOP NAME="LOOP_EVENTS">
+<tr><td><TMPL_VAR NAME=TIME ESCAPE=HTML></td><td><TMPL_VAR NAME=EVENT ESCAPE=HTML></td><td><TMPL_VAR NAME=IP ESCAPE=HTML></td></tr>
+</TMPL_LOOP>
+</tbody>
+</table>
+</div>
+
+</body>
+<TMPL_INCLUDE NAME="footer.tmpl">
